@@ -1,0 +1,145 @@
+.home-container {
+  background-color: black;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  color: white;
+}
+
+.home-container h1 {
+  margin-bottom: 20px;
+}
+
+.add-task-button {
+  margin-bottom: 20px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: auto;
+}
+
+.task-item {
+  background-color: white;
+  color: black;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
+}
+
+.task-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.task-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.ant-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-task-button {
+    margin-top: 20px;
+}
+
+
+.add-task-container {
+  background-color: black;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  color: white;
+}
+
+.add-task-container h1 {
+  margin-bottom: 20px;
+}
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 350px;
+}
+
+.add-task-form .ant-input,
+.add-task-form .ant-select-selector {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.add-task-form .error {
+  color: red;
+  font-size: 12px;
+}
+
+.add-task-form button {
+  width: 100%;
+}
+.view-all-container {
+  background-color: #111;
+  min-height: 100vh;
+  padding: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  color: white;
+}
+
+.task-card {
+  width: 300px;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  height: 350px; 
+  box-shadow: 0px 3px 8px rgba(0,0,0,0.3);
+}
+
+.task-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.task-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.task-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+flex-direction: column;
+  justify-content: flex-end; /* aligns buttons to right */
+}
+
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  background-color: #111;
+}
