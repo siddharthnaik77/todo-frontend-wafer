@@ -49,7 +49,7 @@ const ViewAllTask = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [fetchTasks]);
 
   return (
     <>
