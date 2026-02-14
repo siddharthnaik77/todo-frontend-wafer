@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Card, Button, Tag, Input, Select } from "antd";
 import { DeleteOutlined, SwapOutlined } from "@ant-design/icons";
@@ -17,22 +17,21 @@ const { Option } = Select;
 
 const ViewAllTask = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-    const [filterName, setFilterName] = useState("");
+  const [filterName, setFilterName] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const params: any = {};
-      if (filterName) params.name = filterName; // add name if typed
-      if (filterStatus !== "All") params.status = filterStatus; // add status if not "All"
+      if (filterName) params.name = filterName;
+      if (filterStatus !== "All") params.status = filterStatus;
 
       const res = await axios.get(`${API_URL}/tasks`, { params });
       setTasks(res.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
-  };
-
+  }, [filterName, filterStatus]);
 
   const toggleStatus = async (task: Task) => {
     await axios.put(`${API_URL}/tasks/${task.id}`, {
@@ -53,8 +52,7 @@ const ViewAllTask = () => {
 
   return (
     <>
-    
-        <div className="filter-bar">
+      <div className="filter-bar">
         <Input
           placeholder="Search by task name"
           value={filterName}
@@ -70,51 +68,57 @@ const ViewAllTask = () => {
           <Option value="Complete">Complete</Option>
           <Option value="Incomplete">Incomplete</Option>
         </Select>
-        <Button type="primary" style={{ marginLeft: "10px" }} onClick={fetchTasks}>
+        <Button
+          type="primary"
+          style={{ marginLeft: "10px" }}
+          onClick={fetchTasks}
+        >
           Apply Filters
         </Button>
 
         <Link to="/" className="">
-        <Button>Home</Button></Link>
+          <Button>Home</Button>
+        </Link>
       </div>
-      
-      
-    <div className="view-all-container">
-        
-
-      {tasks.length === 0 && <p style={{ color: "white" }}>No tasks found.</p>}
-      {tasks.map((task) => (
-        <Card key={task.id} className="task-card">
-          <div className="task-title">{task.name}</div>
-          <div className="task-details">
-            <div><strong>Description:</strong> {task.description}</div>
-            <div>
-              <strong>Status:</strong>{" "}
-              <Tag color={task.status === "Complete" ? "green" : "red"}>
-                {task.status}
-              </Tag>
+      <div className="view-all-container">
+        {tasks.length === 0 && (
+          <p style={{ color: "white" }}>No tasks found.</p>
+        )}
+        {tasks.map((task) => (
+          <Card key={task.id} className="task-card">
+            <div className="task-title">{task.name}</div>
+            <div className="task-details">
+              <div>
+                <strong>Description:</strong> {task.description}
+              </div>
+              <div>
+                <strong>Status:</strong>{" "}
+                <Tag color={task.status === "Complete" ? "green" : "red"}>
+                  {task.status}
+                </Tag>
+              </div>
             </div>
-          </div>
-          <div className="task-buttons">
-            <Button
-              type="default"
-              icon={<SwapOutlined />}
-              onClick={() => toggleStatus(task)}
-            >
-              Toggle
-            </Button>
-            <Button
-              type="primary"
-              danger
-              icon={<DeleteOutlined />}
-              onClick={() => deleteTask(task.id)}
-            >
-              Delete
-            </Button>
-          </div>
-        </Card>
-      ))}
-    </div> </>
+            <div className="task-buttons">
+              <Button
+                type="default"
+                icon={<SwapOutlined />}
+                onClick={() => toggleStatus(task)}
+              >
+                Toggle
+              </Button>
+              <Button
+                type="primary"
+                danger
+                icon={<DeleteOutlined />}
+                onClick={() => deleteTask(task.id)}
+              >
+                Delete
+              </Button>
+            </div>
+          </Card>
+        ))}
+      </div>{" "}
+    </>
   );
 };
 
