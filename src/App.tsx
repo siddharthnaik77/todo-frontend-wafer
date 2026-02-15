@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add" element={<AddTask />} />
+         <Route path="/add/:id" element={<AddTask />} />
         <Route path="/view-all" element={<ViewAllTask />} />
       </Routes>
     </BrowserRouter>

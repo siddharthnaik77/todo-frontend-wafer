@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Card, Button, Tag, Input, Select } from "antd";
-import { DeleteOutlined, SwapOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import "./../style.css";
 const API_URL = process.env.REACT_APP_API_URL;
@@ -33,13 +33,7 @@ const ViewAllTask = () => {
     }
   }, [filterName, filterStatus]);
 
-  const toggleStatus = async (task: Task) => {
-    await axios.put(`${API_URL}/tasks/${task.id}`, {
-      ...task,
-      status: task.status === "Complete" ? "Incomplete" : "Complete",
-    });
-    fetchTasks();
-  };
+ 
 
   const deleteTask = async (id: number) => {
     await axios.delete(`${API_URL}/tasks/${id}`);
@@ -99,22 +93,24 @@ const ViewAllTask = () => {
               </div>
             </div>
             <div className="task-buttons">
-              <Button
-                type="default"
-                icon={<SwapOutlined />}
-                onClick={() => toggleStatus(task)}
-              >
-                Toggle
-              </Button>
-              <Button
-                type="primary"
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => deleteTask(task.id)}
-              >
-                Delete
-              </Button>
-            </div>
+  <Link to={`/add/${task.id}`}>
+    <Button
+      type="primary"
+      icon={<EditOutlined />}
+    >
+      Update
+    </Button>
+  </Link>
+
+  <Button
+    type="primary"
+    danger
+    icon={<DeleteOutlined />}
+    onClick={() => deleteTask(task.id)}
+  >
+    Delete
+  </Button>
+</div>
           </Card>
         ))}
       </div>{" "}
