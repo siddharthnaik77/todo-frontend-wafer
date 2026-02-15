@@ -2,8 +2,9 @@ import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Card, Button, Tag, Input, Select } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./../style.css";
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 interface Task {
@@ -16,6 +17,8 @@ interface Task {
 const { Option } = Select;
 
 const ViewAllTask = () => {
+  const navigate = useNavigate(); // ✅ FIXED (inside component)
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filterName, setFilterName] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
@@ -33,11 +36,13 @@ const ViewAllTask = () => {
     }
   }, [filterName, filterStatus]);
 
- 
-
   const deleteTask = async (id: number) => {
-    await axios.delete(`${API_URL}/tasks/${id}`);
-    fetchTasks();
+    try {
+      await axios.delete(`${API_URL}/tasks/${id}`);
+      fetchTasks();
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
 
   useEffect(() => {
@@ -53,6 +58,7 @@ const ViewAllTask = () => {
           onChange={(e) => setFilterName(e.target.value)}
           style={{ width: "250px" }}
         />
+
         <Select
           value={filterStatus}
           onChange={(value) => setFilterStatus(value)}
@@ -62,29 +68,30 @@ const ViewAllTask = () => {
           <Option value="Complete">Complete</Option>
           <Option value="Incomplete">Incomplete</Option>
         </Select>
-        <Button
-          type="primary"
-          style={{ marginLeft: "10px" }}
-          onClick={fetchTasks}
-        >
+
+        <Button type="primary" onClick={fetchTasks}>
           Apply Filters
         </Button>
 
-        <Link to="/" className="">
+        <Link to="/">
           <Button>Home</Button>
         </Link>
       </div>
+
       <div className="view-all-container">
         {tasks.length === 0 && (
           <p style={{ color: "white" }}>No tasks found.</p>
         )}
+
         {tasks.map((task) => (
           <Card key={task.id} className="task-card">
             <div className="task-title">{task.name}</div>
+
             <div className="task-details">
               <div>
                 <strong>Description:</strong> {task.description}
               </div>
+
               <div>
                 <strong>Status:</strong>{" "}
                 <Tag color={task.status === "Complete" ? "green" : "red"}>
@@ -92,28 +99,28 @@ const ViewAllTask = () => {
                 </Tag>
               </div>
             </div>
-            <div className="task-buttons">
-  <Link to={`/add/${task.id}`}>
-    <Button
-      type="primary"
-      icon={<EditOutlined />}
-    >
-      Update
-    </Button>
-  </Link>
 
-  <Button
-    type="primary"
-    danger
-    icon={<DeleteOutlined />}
-    onClick={() => deleteTask(task.id)}
-  >
-    Delete
-  </Button>
-</div>
+            <div className="task-buttons">
+              <Button
+                type="primary"
+                icon={<EditOutlined />}
+                onClick={() => navigate(`/add/${task.id}`)}
+              >
+                Update
+              </Button>
+
+              <Button
+                type="primary"
+                icon={<DeleteOutlined />}
+                className="delete-btn"
+                onClick={() => deleteTask(task.id)}
+              >
+                Delete
+              </Button>
+            </div>
           </Card>
         ))}
-      </div>{" "}
+      </div>
     </>
   );
 };
