@@ -93,14 +93,19 @@
   margin-top: 4px;
 }
 
-/* Task Buttons */
+/* Task Buttons
 .task-buttons {
   display: flex;
-  flex-direction: column;
+  flex-direction: flex-end;
   gap: 10px;
   flex-shrink: 0;
-}
+} */
 
+.task-buttons .ant-btn {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+}
 /* ================= HOME BUTTONS ================= */
 
 .home-buttons {
@@ -241,13 +246,13 @@
     align-items: flex-start;
   }
 
-  .task-buttons {
+  /* .task-buttons {
     width: 100%;
-  }
+  } */
 
-  .task-buttons .ant-btn {
+  /* .task-buttons .ant-btn {
     width: 100%;
-  }
+  } */
 
   .home-buttons {
     flex-direction: column;
@@ -280,7 +285,7 @@
   background-color: #c9302c !important;
 }
 
-.task-buttons {
+/* .task-buttons {
   display: flex;
   gap: 10px;
   width: 100%;
@@ -290,4 +295,19 @@
   flex: 1;              
   height: 40px;         
   font-weight: 500;
+} */
+
+.task-buttons {
+  display: flex;
+  gap: 10px;
+  /* justify-content: flex-end; */
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* Smaller inline buttons */
+.task-buttons .ant-btn {
+  height: 32px;
+  padding: 0 14px;
+  font-size: 13px;
 }
