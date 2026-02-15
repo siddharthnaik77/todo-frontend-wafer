@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button, Modal } from "antd";
-import { EyeOutlined, DeleteOutlined, SwapOutlined } from "@ant-design/icons";
+import { EyeOutlined } from "@ant-design/icons";
 import "./../style.css";
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -25,19 +25,6 @@ const Home = () => {
     } catch (error) {
       console.error("Error fetching tasks:", error);
     }
-  };
-
-  const deleteTask = async (id: number) => {
-    await axios.delete(`${API_URL}/tasks/${id}`);
-    fetchTasks();
-  };
-
-  const toggleStatus = async (task: Task) => {
-    await axios.put(`${API_URL}/tasks/${task.id}`, {
-      ...task,
-      status: task.status === "Complete" ? "Incomplete" : "Complete",
-    });
-    fetchTasks();
   };
 
   const viewTask = (task: Task) => {
